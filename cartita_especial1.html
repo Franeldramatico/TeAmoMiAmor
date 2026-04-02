@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para mi Aranxita 💜</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Crimson+Pro:ital,wght@0,200;0,300;1,200;1,300&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep: #0d0010;
+    --void: #130018;
+    --plum: #2a0040;
+    --royal: #4a0080;
+    --grape: #6b21a8;
+    --violet: #9333ea;
+    --lavender: #c084fc;
+    --lilac: #e9d5ff;
+    --blush: #fdf4ff;
+    --gold: #f5c842;
+    --rose: #f0abfc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--deep);
+    min-height: 100vh;
+    font-family: 'Crimson Pro', serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ─── STARS ─── */
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--d, 3s) ease-in-out infinite var(--delay, 0s);
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: var(--op, 0.8); transform: scale(1.2); }
+  }
+
+  /* ─── FLOATING PARTICLES ─── */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    font-size: var(--fs, 14px);
+    animation: float-up var(--dur, 12s) ease-in infinite var(--del, 0s);
+    opacity: 0;
+    bottom: -50px;
+  }
+  @keyframes float-up {
+    0% { opacity: 0; transform: translateY(0) translateX(0) rotate(0deg); }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-110vh) translateX(var(--drift, 30px)) rotate(360deg); }
+  }
+
+  /* ─── AMBIENT GLOW ─── */
+  .glow-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(147,51,234,0.25), transparent 70%);
+    top: -100px; left: -100px;
+    animation: orb-drift 8s ease-in-out infinite alternate;
+  }
+  .orb2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(192,132,252,0.2), transparent 70%);
+    bottom: -80px; right: -80px;
+    animation: orb-drift 10s ease-in-out infinite alternate-reverse;
+  }
+  .orb3 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(240,171,252,0.15), transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-orb 6s ease-in-out infinite;
+  }
+  @keyframes orb-drift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(40px, 30px); }
+  }
+  @keyframes pulse-orb {
+    0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
+  }
+
+  /* ─── MAIN WRAPPER ─── */
+  .wrapper {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.2); }
+  }
+
+  /* ─── LETTER CARD ─── */
+  .card {
+    max-width: 780px;
+    width: 100%;
+    position: relative;
+    animation: card-appear 1s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+  }
+  @keyframes card-appear {
+    0% { opacity: 0; transform: translateY(40px) scale(0.96); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Outer frame */
+  .card-outer {
+    background: linear-gradient(145deg, var(--plum) 0%, #1a0028 40%, var(--plum) 100%);
+    border-radius: 24px;
+    padding: 3px;
+    box-shadow:
+      0 0 0 1px rgba(192,132,252,0.3),
+      0 0 40px rgba(147,51,234,0.4),
+      0 0 100px rgba(147,51,234,0.15),
+      0 40px 80px rgba(0,0,0,0.6);
+  }
+
+  /* Inner card */
+  .card-inner {
+    background: linear-gradient(160deg, #1a0028 0%, #0f0018 50%, #1c0030 100%);
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Corner ornaments */
+  .corner {
+    position: absolute;
+    width: 60px; height: 60px;
+    opacity: 0.5;
+  }
+  .corner svg { width: 100%; height: 100%; }
+  .corner-tl { top: 12px; left: 12px; }
+  .corner-tr { top: 12px; right: 12px; transform: scaleX(-1); }
+  .corner-bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+  .corner-br { bottom: 12px; right: 12px; transform: scale(-1,-1); }
+
+  /* Header */
+  .card-header {
+    padding: 50px 60px 30px;
+    text-align: center;
+    position: relative;
+  }
+  .header-date {
+    font-family: 'Crimson Pro', serif;
+    font-weight: 200;
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    color: var(--lavender);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 16px;
+    animation: fade-in 1s ease 0.8s both;
+  }
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--lilac);
+    line-height: 1.1;
+    text-shadow: 0 0 40px rgba(192,132,252,0.5);
+    animation: fade-in 1s ease 1s both;
+  }
+  .header-title span {
+    color: var(--rose);
+    display: block;
+    font-size: 0.65em;
+    font-weight: 200;
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+  }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 60px 36px;
+    animation: fade-in 1s ease 1.2s both;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--violet), transparent);
+  }
+  .divider-gem {
+    font-size: 18px;
+    animation: spin-gem 8s linear infinite;
+  }
+  @keyframes spin-gem {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  /* Body */
+  .card-body {
+    padding: 0 60px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .paragraph {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(233,213,255,0.88);
+    opacity: 0;
+    transform: translateY(16px);
+    animation: para-appear 0.9s ease forwards;
+  }
+  .paragraph:nth-child(1) { animation-delay: 1.4s; }
+  .paragraph:nth-child(2) { animation-delay: 1.8s; }
+  .paragraph:nth-child(3) { animation-delay: 2.2s; }
+  .paragraph:nth-child(4) { animation-delay: 2.6s; }
+  .paragraph:nth-child(5) { animation-delay: 3s; }
+  .paragraph:nth-child(6) { animation-delay: 3.4s; }
+
+  @keyframes para-appear {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .paragraph em {
+    color: var(--rose);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .paragraph strong {
+    color: var(--lavender);
+    font-weight: 600;
+  }
+  .kaomoji {
+    display: inline-block;
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  /* Special highlight paragraph */
+  .highlight-para {
+    background: linear-gradient(135deg, rgba(107,33,168,0.25), rgba(147,51,234,0.1));
+    border: 1px solid rgba(192,132,252,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .highlight-para::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--violet), var(--rose));
+    border-radius: 4px 0 0 4px;
+  }
+
+  /* Distance section */
+  .distance-box {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: rgba(74,0,128,0.15);
+    border: 1px solid rgba(147,51,234,0.2);
+    border-radius: 14px;
+    padding: 22px 26px;
+  }
+  .flag-pair {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-top: 4px;
+  }
+
+  /* Signature */
+  .signature-area {
+    margin: 16px 60px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    animation: fade-in 1.2s ease 3.8s both;
+  }
+  .sig-line {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--violet));
+    margin-bottom: 4px;
+  }
+  .sig-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--lavender);
+    text-shadow: 0 0 20px rgba(192,132,252,0.4);
+  }
+  .sig-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.85rem;
+    font-weight: 200;
+    letter-spacing: 0.15em;
+    color: var(--violet);
+    opacity: 0.7;
+  }
+
+  /* Bottom hearts bar */
+  .hearts-bar {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid rgba(147,51,234,0.15);
+    letter-spacing: 8px;
+    font-size: 16px;
+    animation: fade-in 1s ease 4.2s both;
+  }
+  .hearts-bar span {
+    display: inline-block;
+    animation: heartbeat var(--d, 2s) ease-in-out infinite var(--dl, 0s);
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .card-header { padding: 40px 30px 24px; }
+    .card-body { padding: 0 30px 40px; }
+    .divider { margin: 0 30px 28px; }
+    .signature-area { margin: 10px 30px 40px; }
+    .corner { width: 40px; height: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars background -->
+<div class="stars" id="stars"></div>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Ambient glows -->
+<div class="glow-orb orb1"></div>
+<div class="glow-orb orb2"></div>
+<div class="glow-orb orb3"></div>
+
+<!-- Main card -->
+<div class="wrapper">
+  <div class="card">
+    <div class="card-outer">
+      <div class="card-inner">
+
+        <!-- Corner ornaments -->
+        <div class="corner corner-tl">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4 L4 56 M4 4 L56 4" stroke="#9333ea" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 4 L20 4 M4 4 L4 20" stroke="#c084fc" stroke-width="1" opacity="0.5"/>
+            <circle cx="4" cy="4" r="3" fill="#9333ea" opacity="0.7"/>
+            <path d="M14 4 Q14 14 4 14" stroke="#6b21a8" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="corner corner-tr">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4 L4 56 M4 4 L56 4" stroke="#9333ea" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="4" cy="4" r="3" fill="#9333ea" opacity="0.7"/>
+            <path d="M14 4 Q14 14 4 14" stroke="#6b21a8" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="corner corner-bl">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4 L4 56 M4 4 L56 4" stroke="#9333ea" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="4" cy="4" r="3" fill="#9333ea" opacity="0.7"/>
+            <path d="M14 4 Q14 14 4 14" stroke="#6b21a8" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="corner corner-br">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4 L4 56 M4 4 L56 4" stroke="#9333ea" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="4" cy="4" r="3" fill="#9333ea" opacity="0.7"/>
+            <path d="M14 4 Q14 14 4 14" stroke="#6b21a8" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+
+        <!-- Header -->
+        <div class="card-header">
+          <div class="header-date">1 de Abril · Un Mes Más Juntos 💜</div>
+          <div class="header-title">
+            Para mi Aranxita hermosa
+            <span>con todo el amor de tu Franxito</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider">
+          <div class="divider-line"></div>
+          <span class="divider-gem">✦</span>
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+
+          <p class="paragraph">
+            Hola mi amor hermosa 💜 hace ya un ratito que no te hacía una cartita, y la verdad es que esta vez quería que fuera algo
+            especial... porque esta cartita marca algo nuevo que quiero empezar a hacer:
+            <strong>celebrar cada mes que cumplimos siendo novios.</strong> <span class="kaomoji">:D</span>
+          </p>
+
+          <p class="paragraph highlight-para">
+            Hoy es uno de abril, y sí, sé cómo suena eso. Sé que es el día de los inocentes y que quizás suena a broma de mal gusto
+            <span class="kaomoji">Bv</span>, pero te prometo que no es así, mi amor. Es todo lo contrario:
+            es un recordatorio de <em>lo mucho que te amo</em> y de lo feliz que me hace tenerte a ti.
+          </p>
+
+          <p class="paragraph">
+            Todos estos meses que hemos estado juntitos han sido, sin dudarlo ni un segundo,
+            <em>los mejores meses de mi vida, amor.</em> Hemos pasado de todo, hemos tenido nuestros momentos
+            complicados como cualquier pareja, pero los hemos superado juntos, como la pareja pro que somos. <span class="kaomoji">Bv</span>
+          </p>
+
+          <div class="paragraph distance-box">
+            <div class="flag-pair">🇨🇱💜🇲🇽</div>
+            <div>
+              A veces pienso en lo lejos que estamos físicamente, yo acá en Chile y tú en México, y es verdad que
+              la distancia es complicada, que hay días que quisiera solo poder abrazarte y ya... pero al mismo tiempo,
+              <em>el amor que siento por ti se siente tan real, tan fuerte</em>, que esa distancia se hace pequeña.
+              El amor se siente como nunca, amor, y eso es lo más lindo de todo esto.
+            </div>
+          </div>
+
+          <p class="paragraph">
+            Eres perfecta para mí, mi vampira hermosa 🖤💜. Con tus cosas raras y las mías, con nuestras charlas hasta tarde,
+            con las veces que nos reímos de nada... contigo todo se siente bien. Eres la persona con quien más quiero pasar
+            el tiempo, aunque sea a través de una pantalla. Y un día, ese "a través de una pantalla" va a cambiar, y cuando
+            pase, va a ser lo mejor del mundo. <span class="kaomoji">:D</span>
+          </p>
+
+          <p class="paragraph">
+            Gracias por elegirme cada día, Aranxita. Gracias por quedarte, por aguantarme, por hacerme reír y por ser mi persona favorita
+            en todo este mundo. <em>Te amo muchísimo, hoy y todos los meses que vienen.</em> 💜✨
+          </p>
+
+        </div>
+
+        <!-- Signature -->
+        <div class="signature-area">
+          <div class="sig-line"></div>
+          <div class="sig-name">Tu Franxito 💜</div>
+          <div class="sig-subtitle">siempre, para siempre</div>
+        </div>
+
+        <!-- Hearts bar -->
+        <div class="hearts-bar">
+          <span style="--d:1.8s;--dl:0s">💜</span>
+          <span style="--d:2.2s;--dl:0.2s">🖤</span>
+          <span style="--d:1.6s;--dl:0.4s">💜</span>
+          <span style="--d:2s;--dl:0.6s">🖤</span>
+          <span style="--d:1.9s;--dl:0.8s">💜</span>
+          <span style="--d:2.3s;--dl:1s">🖤</span>
+          <span style="--d:1.7s;--dl:1.2s">💜</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Generate stars ──
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      --d:${Math.random()*4+2}s; --delay:${Math.random()*6}s;
+      --op:${Math.random()*0.7+0.2};
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // ── Generate floating particles ──
+  const particlesEl = document.getElementById('particles');
+  const emojis = ['💜','✦','✧','·','°','🖤','♡','⋆','˚','✿'];
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const em = emojis[Math.floor(Math.random()*emojis.length)];
+    p.textContent = em;
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      --fs:${Math.random()*14+10}px;
+      --dur:${Math.random()*10+10}s;
+      --del:${Math.random()*12}s;
+      --drift:${(Math.random()-0.5)*80}px;
+    `;
+    particlesEl.appendChild(p);
+  }
+
+  // ── Mouse parallax on card ──
+  const card = document.querySelector('.card');
+  document.addEventListener('mousemove', e => {
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const dx = (e.clientX - cx) / cx;
+    const dy = (e.clientY - cy) / cy;
+    card.style.transform = `perspective(1200px) rotateY(${dx*3}deg) rotateX(${-dy*2}deg)`;
+  });
+  document.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg)';
+  });
+  card.style.transition = 'transform 0.4s ease';
+</script>
+</body>
+</html>
